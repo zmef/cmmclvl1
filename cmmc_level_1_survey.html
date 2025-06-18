@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMMC Level 1 Self-Assessment</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <h1>CMMC Level 1</h1>
+      <nav id="nav"></nav>
+      <div id="progress"></div>
+    </aside>
+    <main id="main">
+      <section id="start">
+        <h2>Welcome to the CMMC Level 1 Self-Assessment Tool</h2>
+        <p><strong>Disclaimer:</strong> This is a free, unofficial tool. No data is stored on a server. All responses are saved locally in your browser only.</p>
+        <button id="startBtn">Start Assessment</button>
+      </section>
+      <section id="question" hidden>
+        <div id="question-content"></div>
+        <form id="responseForm">
+          <label><input type="radio" name="status" value="MET" required /> MET</label>
+          <label><input type="radio" name="status" value="NOT MET" /> NOT MET</label>
+          <label><input type="radio" name="status" value="N/A" /> N/A</label>
+          <br />
+          <textarea id="evidence" placeholder="Enter evidence or comments..."></textarea>
+          <div class="nav-buttons">
+            <button type="button" id="prevBtn">Previous</button>
+            <button type="submit" id="nextBtn">Next</button>
+          </div>
+        </form>
+      </section>
+      <section id="summary" hidden>
+        <h2>Assessment Summary</h2>
+        <div id="summary-stats"></div>
+        <button id="downloadBtn">Download PDF</button>
+        <button id="restartBtn">Restart</button>
+      </section>
+    </main>
+  </div>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script src="html2pdf.bundle.min.js"></script>
+</body>
+</html>
