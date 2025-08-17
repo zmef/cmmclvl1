@@ -14,18 +14,22 @@
       <div id="progress"></div>
     </aside>
     <main id="main">
+      <!-- Start screen -->
       <section id="start">
         <h2>Welcome to the CMMC Level 1 Self-Assessment Tool</h2>
         <p><strong>Disclaimer:</strong> This is a free, unofficial tool. No data is stored on a server. All responses are saved locally in your browser only.</p>
         <button id="startBtn">Start Assessment</button>
       </section>
+      <!-- Question screen -->
       <section id="question" hidden>
         <div id="question-content"></div>
         <form id="responseForm">
-          <label><input type="radio" name="status" value="MET" required /> MET</label>
-          <label><input type="radio" name="status" value="NOT MET" /> NOT MET</label>
-          <label><input type="radio" name="status" value="N/A" /> N/A</label>
-          <br />
+          <fieldset>
+            <legend>Status</legend>
+            <label for="status-met"><input id="status-met" type="radio" name="status" value="MET" required /> MET</label>
+            <label for="status-notmet"><input id="status-notmet" type="radio" name="status" value="NOT MET" /> NOT MET</label>
+            <label for="status-na"><input id="status-na" type="radio" name="status" value="N/A" /> N/A</label>
+          </fieldset>
           <textarea id="evidence" placeholder="Enter evidence or comments..."></textarea>
           <div class="nav-buttons">
             <button type="button" id="prevBtn">Previous</button>
@@ -33,9 +37,21 @@
           </div>
         </form>
       </section>
+      <!-- Summary screen -->
       <section id="summary" hidden>
         <h2>Assessment Summary</h2>
         <div id="summary-stats"></div>
+        <!-- Signature capture -->
+        <div id="signature-section" hidden>
+          <h3>Signature</h3>
+          <div class="signature-inputs">
+            <label for="signatureName">Name:</label>
+            <input id="signatureName" type="text" placeholder="Enter your name" />
+          </div>
+          <div class="signature-affirm">
+            <label><input type="checkbox" id="affirmCheckbox" /> I affirm that the above information is complete and accurate.</label>
+          </div>
+        </div>
         <button id="downloadBtn">Download PDF</button>
         <button id="restartBtn">Restart</button>
       </section>

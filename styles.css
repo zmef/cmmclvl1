@@ -82,3 +82,8 @@ button:hover {
   padding-left: 1rem;
   list-style: square;
 }
+
+/* additional spacing for signature section */
+#signature-section {
+  margin-top: 1.5rem;
+}
