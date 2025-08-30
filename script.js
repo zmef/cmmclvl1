@@ -78,15 +78,20 @@ function saveAnswer() {
 
 // Build the sidebar navigation with clickable items and progress indicator
 function updateSidebar() {
+  renderNav();
+  updateProgress();
+}
+
+// Render the navigation items in the sidebar
+function renderNav() {
   const nav = document.getElementById("nav");
-  const progress = document.getElementById("progress");
-  // Build each nav item with completion indicator and active state
   nav.innerHTML = cmmcQuestions.map((q, i) => {
     const done = appState.responses[q.id]?.status ? "✔️" : "";
     const active = i === appState.current ? "active" : "";
     return `<div class="nav-item ${active}" data-index="${i}">${done} ${q.id}</div>`;
   }).join("");
-  // Attach click handlers after updating HTML
+
+  // Attach click handlers to navigation items
   nav.querySelectorAll(".nav-item").forEach(item => {
     item.onclick = () => {
       const index = parseInt(item.getAttribute("data-index"));
@@ -97,36 +102,61 @@ function updateSidebar() {
       }
     };
   });
-  // Update progress text
+}
+
+// Update the progress indicator in the sidebar
+function updateProgress() {
+  const progress = document.getElementById("progress");
+  const total = cmmcQuestions.length;
   const complete = Object.keys(appState.responses).length;
-  progress.innerText = `Progress: ${complete}/${cmmcQuestions.length}`;
+  progress.innerText = `Progress: ${complete}/${total}`;
 }
 
 // Jump to the summary screen and compile results
 function showSummary() {
   questionSection.hidden = true;
   summarySection.hidden = false;
-  // Reset and build a list of results
-  let met = 0, notMet = 0, na = 0;
-  const listItems = [];
-  cmmcQuestions.forEach(q => {
-    const res = appState.responses[q.id];
-    if (!res) return;
-    if (res.status === "MET") met++;
-    else if (res.status === "NOT MET") notMet++;
-    else if (res.status === "N/A") na++;
-    listItems.push(`<li><strong>${q.id}</strong>: ${res.status}${res.evidence ? " – " + res.evidence : ""}</li>`);
-  });
-  const result = notMet > 0 ? "❌ Not Compliant" : "✅ Compliant";
-  summaryStats.innerHTML = `<p><strong>${result}</strong></p>` +
-    `<p>MET: ${met}, NOT MET: ${notMet}, N/A: ${na}</p>` +
-    `<ul>${listItems.join("")}</ul>`;
+
+  const summary = calculateSummary();
+  renderSummary(summary);
+
   // Show signature section for user confirmation
   signatureSection.hidden = false;
-  // Ensure previous signature inputs are cleared
   signatureName.value = "";
   affirmCheckbox.checked = false;
   updateSidebar();
+}
+
+// Calculate summary statistics
+function calculateSummary() {
+  const summary = {
+    met: 0,
+    notMet: 0,
+    na: 0,
+    listItems: [],
+  };
+
+  cmmcQuestions.forEach(q => {
+    const res = appState.responses[q.id];
+    if (!res) return;
+
+    if (res.status === "MET") summary.met++;
+    else if (res.status === "NOT MET") summary.notMet++;
+    else if (res.status === "N/A") summary.na++;
+
+    summary.listItems.push(`<li><strong>${q.id}</strong>: ${res.status}${res.evidence ? ` – <small>${res.evidence}</small>` : ""}</li>`);
+  });
+
+  return summary;
+}
+
+// Render the summary statistics on the page
+function renderSummary(summary) {
+  const result = summary.notMet > 0 ? "❌ Not Compliant" : "✅ Compliant";
+  summaryStats.innerHTML = `
+    <p><strong>${result}</strong></p>
+    <p>MET: ${summary.met}, NOT MET: ${summary.notMet}, N/A: ${summary.na}</p>
+    <ul>${summary.listItems.join("")}</ul>`;
 }
 
 // Download PDF with signature; validate inputs first
@@ -157,6 +187,8 @@ document.getElementById("downloadBtn").onclick = () => {
 
 // Restart the assessment: clear storage and reload the page
 document.getElementById("restartBtn").onclick = () => {
-  localStorage.removeItem("cmmcResponses");
-  location.reload();
+  if (confirm("Are you sure you want to restart? All progress will be lost.")) {
+    localStorage.removeItem("cmmcResponses");
+    location.reload();
+  }
 };
