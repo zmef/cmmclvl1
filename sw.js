@@ -1,7 +1,7 @@
 const CACHE_NAME = 'cmmc-assessment-cache-v1';
 const urlsToCache = [
   '/',
-  'cmmc_level_1_survey.html',
+  'index.html',
   'styles.css',
   'data.js',
   'script.js',
