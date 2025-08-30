@@ -186,3 +186,41 @@ button.restart:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #app {
+    flex-direction: column;
+  }
+
+  aside#sidebar {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .nav-buttons, .summary-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMMC Level 1 Self-Assessment</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#1e1e2f" />
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <h1>CMMC Level 1</h1>
+    </aside>
+    <main id="main">
+      <div class="container">
+        <section id="start">
+          <h2 class="title">CMMC Level 1 Self-Assessment</h2>
+          <p class="subtitle">An unofficial tool to help you assess your compliance with the Cybersecurity Maturity Model Certification (CMMC) Level 1 controls.</p>
+          <p>This self-assessment tool is designed to guide you through the 17 controls of CMMC Level 1. For each control, you can mark your status as "MET," "NOT MET," or "N/A" and provide evidence or comments.</p>
+          <p>Once you have completed the assessment, you can download a PDF summary of your results, including a signature block to affirm the accuracy of your responses.</p>
+          <p><strong>Disclaimer:</strong> This is a free, unofficial tool. No data is stored on a server. All responses are saved locally in your browser only.</p>
+          <a href="assessment.html" class="button">Start Assessment</a>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
